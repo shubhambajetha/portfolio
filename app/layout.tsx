@@ -1,11 +1,29 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Appsheel from "./components/layout/AppShell";
+import Preloader from "./components/intialload/Preloader";
+import { Share_Tech_Mono, Rajdhani } from "next/font/google";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
+
+const shareTechMono = Share_Tech_Mono({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-share-tech-mono",
+});
+
+
+const rajdhani = Rajdhani({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-rajdhani",
+});
+
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -21,9 +39,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${shareTechMono.variable} ${rajdhani.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <Appsheel>
+            <Preloader/>
+          {children}
+        </Appsheel>
+      </body>
     </html>
   );
 }
