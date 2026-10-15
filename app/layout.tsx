@@ -39,9 +39,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${shareTechMono.variable} ${rajdhani.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${shareTechMono.variable} ${rajdhani.variable} h-full scroll-auto antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col bg-background text-foreground [font-family:Arial,Helvetica,sans-serif] selection:bg-[#f2f0ed] selection:text-[#0b0b0b]">
         <Appsheel>
             <Preloader/>
           {children}
