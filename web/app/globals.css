@@ -1,5 +1,9 @@
 @import "tailwindcss";
+@import "swiper/css";
+@import "swiper/css/navigation";
+@import "swiper/css/pagination";
 
+@import "tailwindcss";
 @theme inline {
   --color-background: #000000;
   --color-foreground: #f2f0ed;

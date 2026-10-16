@@ -5,7 +5,6 @@ import Appsheel from "./components/layout/AppShell";
 import Preloader from "./components/intialload/Preloader";
 import { Share_Tech_Mono, Rajdhani } from "next/font/google";
 
-
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
