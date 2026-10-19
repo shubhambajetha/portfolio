@@ -1,0 +1,25 @@
+
+{
+  "name": "portfolio-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "web",
+    "server",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "node scripts/run-apps.mjs dev",
+    "dev:web": "npm --prefix web run dev",
+    "dev:server": "npm --prefix server run dev",
+    "build": "npm --prefix web run build",
+    "lint": "npm --prefix web run lint",
+    "start": "node scripts/run-apps.mjs start",
+    "start:web": "npm --prefix web run start",
+    "start:server": "npm --prefix server run start",
+    "db:generate": "npm run db:generate --workspace=@portfolio/database",
+    "db:migrate": "npm run db:migrate --workspace=@portfolio/database",
+    "db:deploy": "npm run db:deploy --workspace=@portfolio/database",
+    "db:studio": "npm run db:studio --workspace=@portfolio/database"
+  }
+}

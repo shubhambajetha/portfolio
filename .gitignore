@@ -3,6 +3,7 @@ node_modules/
 
 # Next.js and build output
 **/.next/
+packages/database/generated/
 **/out/
 **/dist/
 **/build/
