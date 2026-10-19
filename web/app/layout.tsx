@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist } from "next/font/google";
 import "./globals.css";
 import Appsheel from "./components/layout/AppShell";
 import Preloader from "./components/intialload/Preloader";
@@ -24,11 +24,6 @@ const rajdhani = Rajdhani({
 });
 
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
   title: "Your Name — Full-stack Developer",
   description: "Full-stack developer building clean, thoughtful digital products.",
@@ -38,11 +33,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${shareTechMono.variable} ${rajdhani.variable} h-full scroll-auto antialiased`}
+      className={`${geistSans.variable} ${shareTechMono.variable} ${rajdhani.variable} h-full scroll-auto antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground [font-family:Arial,Helvetica,sans-serif] selection:bg-[#f2f0ed] selection:text-[#0b0b0b]">
         <Appsheel>
-            <Preloader/>
+          <Preloader />
           {children}
         </Appsheel>
       </body>

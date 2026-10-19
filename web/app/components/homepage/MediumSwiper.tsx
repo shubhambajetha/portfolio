@@ -42,7 +42,7 @@ export function MediumSwiper() {
                     type="button"
                     onClick={() => moveTrack(-1)}
                     aria-label="Previous articles"
-                    className="absolute left-2 top-1/2 z-10 grid size-18 -translate-y-1/2 place-items-center rounded-full border border-white/30 bg-black/75 text-gray-100 shadow-lg backdrop-blur-sm transition hover:bg-white hover:text-black"
+                    className="absolute left-2 top-1/2 z-10 grid size-10 -translate-y-1/2 place-items-center rounded-full border border-white/30 bg-black/75 text-gray-100 shadow-lg backdrop-blur-sm transition hover:bg-white hover:text-black sm:size-14"
                 >
                     <ArrowLeft size={17} />
                 </button>
@@ -50,7 +50,7 @@ export function MediumSwiper() {
                     type="button"
                     onClick={() => moveTrack(1)}
                     aria-label="Next articles"
-                    className="absolute right-2 top-1/2 z-10 grid size-18 -translate-y-1/2 place-items-center rounded-full border border-white/30 bg-black/75 text-gray-100 shadow-lg backdrop-blur-sm transition hover:bg-white hover:text-black"
+                    className="absolute right-2 top-1/2 z-10 grid size-10 -translate-y-1/2 place-items-center rounded-full border border-white/30 bg-black/75 text-gray-100 shadow-lg backdrop-blur-sm transition hover:bg-white hover:text-black sm:size-14"
                 >
                     <ArrowRight size={17} />
                 </button>
@@ -62,7 +62,7 @@ export function MediumSwiper() {
                     {articles.map((article) => (
                         <article
                             key={article.title}
-                            className="group relative flex min-h-64 min-w-[82%] snap-start flex-col justify-between overflow-hidden rounded-2xl border border-white/15 bg-[#101010] p-5 sm:min-w-[48%] lg:min-w-[32%]"
+                            className="group relative flex min-h-64 min-w-[88%] snap-start flex-col justify-between overflow-hidden rounded-2xl border border-white/15 bg-[#101010] p-4 sm:min-w-[48%] sm:p-5 lg:min-w-[32%]"
                         >
                             <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${article.color}`} />
                             <div className="relative">

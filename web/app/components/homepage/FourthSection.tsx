@@ -84,20 +84,21 @@ export function FourthSection() {
     }, []);
 
     return (
-        <section ref={sectionRef} id="skills" aria-labelledby="skills-title" className="relative isolate mx-auto w-[calc(100%-2.25rem)] max-w-7xl overflow-hidden py-16 text-white sm:w-[calc(100%-4rem)] sm:py-24">
-            <div aria-hidden="true" className="pointer-events-none absolute -left-32 top-1/4 -z-10 size-96 rounded-full bg-purple-700/10 blur-[110px]" />
+        <section ref={sectionRef} id="skills" aria-labelledby="skills-title" className="group/section relative isolate mx-auto w-[calc(100%-2.25rem)] max-w-7xl overflow-hidden py-16 text-white sm:w-[calc(100%-4rem)] sm:py-24">
+            <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 scale-75 rounded-[40%] bg-[radial-gradient(ellipse_at_center,rgba(37,99,235,0.2),rgba(34,211,238,0.1)_38%,transparent_72%)] opacity-0 blur-3xl transition-all duration-700 group-hover/section:scale-100 group-hover/section:opacity-100" />
+            <div aria-hidden="true" className="pointer-events-none absolute -left-32 top-1/4 -z-10 size-96 rounded-full bg-blue-700/10 blur-[110px]" />
             <header className="skills-heading mb-8 flex items-end justify-between gap-6 sm:mb-10">
                 <div>
-                    <p className="mb-2 font-[var(--font-share-tech-mono)] text-xs uppercase tracking-[0.18em] text-[#c795ff]">What I work with</p>
-                    <h2 id="skills-title" className="font-[var(--font-rajdhani)] text-5xl font-semibold leading-none tracking-tight sm:text-7xl">Skills<span className="text-[#c795ff]">.</span></h2>
+                    <p className="mb-2 font-[var(--font-share-tech-mono)] text-xs uppercase tracking-[0.18em] text-[#22d3ee]">What I work with</p>
+                    <h2 id="skills-title" className="bg-gradient-to-r from-[#60a5fa] to-[#22d3ee] bg-clip-text font-[var(--font-rajdhani)] text-5xl font-semibold leading-none tracking-tight text-transparent sm:text-7xl">Skills.</h2>
                 </div>
                 <p className="mb-1 hidden max-w-xs text-sm leading-6 text-gray-400 sm:block">Tools and technologies I use to bring ideas to life.</p>
             </header>
 
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-6">
                 {skills.map(({ name, Icon, color }) => (
-                    <article key={name} className="group relative flex min-h-28 flex-col items-center justify-center gap-3 overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.055] to-white/[0.015] px-3 py-5 transition-all duration-300 ease-out before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_50%_40%,rgba(155,77,255,0.2),transparent_72%)] before:opacity-0 before:transition-opacity before:duration-300 before:content-[''] hover:-translate-y-1.5 hover:border-purple-300/40 hover:shadow-[0_12px_35px_rgba(155,77,255,0.2),inset_0_0_24px_rgba(155,77,255,0.08)] hover:before:opacity-100 active:-translate-y-1 motion-reduce:transition-none sm:min-h-32 sm:rounded-[20px]">
-                        <Icon aria-hidden="true" style={{ color }} className="relative z-10 size-8 transition duration-300 group-hover:scale-110 group-hover:drop-shadow-[0_0_10px_rgba(199,149,255,0.65)] motion-reduce:transition-none" />
+                    <article key={name} className="group relative flex min-h-28 flex-col items-center justify-center gap-3 overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.055] to-white/[0.015] px-3 py-5 transition-all duration-300 ease-out before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_50%_40%,rgba(34,211,238,0.2),transparent_72%)] before:opacity-0 before:transition-opacity before:duration-300 before:content-[''] hover:-translate-y-1.5 hover:border-cyan-300/40 hover:shadow-[0_12px_35px_rgba(37,99,235,0.2),inset_0_0_24px_rgba(34,211,238,0.08)] hover:before:opacity-100 active:-translate-y-1 motion-reduce:transition-none sm:min-h-32 sm:rounded-[20px]">
+                        <Icon aria-hidden="true" style={{ color }} className="relative z-10 size-8 transition duration-300 group-hover:scale-110 group-hover:drop-shadow-[0_0_10px_rgba(34,211,238,0.55)] motion-reduce:transition-none" />
                         <h3 className="relative z-10 m-0 text-sm font-medium text-gray-300 transition-colors duration-300 group-hover:text-white">{name}</h3>
                     </article>
                 ))}

@@ -97,13 +97,14 @@ export function ThirdSection() {
         <section
             ref={sectionRef}
             id="experience"
-            className="relative mx-auto w-full max-w-7xl overflow-hidden bg-black px-5 py-20 text-white sm:px-8 sm:py-28"
+            className="group/section relative isolate mx-auto w-full max-w-7xl overflow-hidden bg-black px-5 py-20 text-white sm:px-8 sm:py-28"
         >
-            <div className="pointer-events-none absolute -left-40 top-1/3 size-80 rounded-full bg-purple-700/10 blur-[100px]" />
+            <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 scale-75 bg-[radial-gradient(ellipse_at_50%_45%,rgba(37,99,235,0.2),rgba(34,211,238,0.1)_38%,transparent_72%)] opacity-0 blur-3xl transition-all duration-700 group-hover/section:scale-100 group-hover/section:opacity-100" />
+            <div className="pointer-events-none absolute -left-40 top-1/3 size-80 rounded-full bg-blue-700/10 blur-[100px]" />
             <header className="relative mb-16 text-center sm:mb-24">
-                <h2 className="mx-auto max-w-3xl font-sans text-5xl font-medium leading-[0.98] tracking-tight text-white sm:text-7xl">
+                <h2 className="mx-auto max-w-3xl bg-gradient-to-r from-[#60a5fa] via-[#22d3ee] to-[#bfdbfe] bg-clip-text font-sans text-5xl font-medium leading-[0.98] tracking-tight text-transparent sm:text-7xl">
                     My career &
-                    <span className="block bg-gradient-to-r from-[#e7c7ff] to-[#9b4dff] bg-clip-text text-transparent">
+                    <span className="block bg-gradient-to-r from-[#60a5fa] to-[#22d3ee] bg-clip-text text-transparent">
                         experience
                     </span>
                 </h2>
@@ -113,11 +114,11 @@ export function ThirdSection() {
                 <div className="absolute bottom-12 left-1/2 top-0 w-px -translate-x-1/2 bg-white/10" />
                 <div
                     ref={lineRef}
-                    className="absolute bottom-12 left-1/2 top-0 w-px -translate-x-1/2 origin-top bg-gradient-to-b from-[#e7c7ff] via-[#bc71ff] to-[#9b4dff] shadow-[0_0_14px_2px_rgba(180,83,255,0.6)]"
+                    className="absolute bottom-12 left-1/2 top-0 w-px -translate-x-1/2 origin-top bg-gradient-to-b from-[#bfdbfe] via-[#22d3ee] to-[#2563eb] shadow-[0_0_14px_2px_rgba(34,211,238,0.45)]"
                 />
                 <span
                     ref={glowRef}
-                    className="absolute left-[calc(50%-8px)] top-0 z-10 size-4 rounded-full bg-[#e5baff] shadow-[0_0_22px_8px_rgba(190,105,255,0.65)]"
+                    className="absolute left-[calc(50%-8px)] top-0 z-10 size-4 rounded-full bg-[#bfdbfe] shadow-[0_0_22px_8px_rgba(34,211,238,0.55)]"
                 />
 
                 <div className="space-y-14 sm:space-y-24">
@@ -131,7 +132,7 @@ export function ThirdSection() {
                                     <h3 className="font-sans text-xl font-semibold leading-tight text-gray-100 sm:text-3xl">
                                         {item.title}
                                     </h3>
-                                    <p className="mt-2 font-sans text-sm text-[#c795ff] sm:text-lg">
+                                    <p className="mt-2 font-sans text-sm text-[#22d3ee] sm:text-lg">
                                         {item.type}
                                     </p>
                                 </div>
@@ -141,7 +142,7 @@ export function ThirdSection() {
                             </div>
 
                             <div aria-hidden="true" className="relative z-10 flex justify-center pt-2">
-                                <span className="experience-point size-3 rounded-full border border-[#edcaff] bg-[#b94dff] shadow-[0_0_14px_4px_rgba(185,77,255,0.55)]" />
+                                <span className="experience-point size-3 rounded-full border border-[#bfdbfe] bg-[#2563eb] shadow-[0_0_14px_4px_rgba(34,211,238,0.45)]" />
                             </div>
 
                             <div>

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import gsap from "gsap";
 import { useEffect, useRef } from "react";
@@ -21,82 +21,64 @@ export default function Preloader() {
     useEffect(() => {
         const container = containerRef.current;
         const text = textRef.current;
-
         if (!container || !text) return;
 
-        const ctx = gsap.context(() => {
-            const tl = gsap.timeline();
+        const context = gsap.context(() => {
+            const timeline = gsap.timeline();
 
             greetings.forEach((greeting, index) => {
                 const isLast = index === greetings.length - 1;
-
-                // Enter
-                tl.set(text, {
+                timeline.set(text, {
                     textContent: `• ${greeting}`,
                     opacity: 0,
-                    y: 10,
+                    y: 8,
                     scale: 1,
                     filter: "blur(4px)",
                 });
-
-                tl.to(text, {
+                timeline.to(text, {
                     opacity: 1,
                     y: 0,
                     filter: "blur(0px)",
-                    duration: 0.12,
-                    ease: "power3.out",
+                    duration: 0.06,
+                    ease: "power2.out",
                 });
+                timeline.to({}, { duration: isLast ? 0.08 : 0.025 });
 
-                // Hold
-                tl.to({}, { duration: isLast ? 0.35 : 0.09 });
-
-                // Leave (skipped on the last word, it zooms out below)
                 if (!isLast) {
-                    tl.to(text, {
+                    timeline.to(text, {
                         opacity: 0,
-                        y: -10,
+                        y: -8,
                         filter: "blur(4px)",
-                        duration: 0.08,
+                        duration: 0.045,
                         ease: "power2.in",
                     });
                 }
             });
 
-            // Last word: blur + zoom into the screen
-            tl.to(text, {
+            timeline.to(text, {
                 scale: 12,
                 filter: "blur(24px)",
                 opacity: 0,
-                duration: 0.8,
+                duration: 0.4,
                 ease: "power3.in",
             });
-
-            // Background fades out while the zoom is still finishing
-            tl.to(
+            timeline.to(
                 container,
-                {
-                    opacity: 0,
-                    duration: 0.4,
-                    ease: "power2.out",
-                },
-                "<0.4"
+                { opacity: 0, duration: 0.18, ease: "power2.out" },
+                "<0.17",
             );
-
-            tl.set(container, { display: "none" });
+            timeline.set(container, { display: "none" });
         });
 
-        return () => ctx.revert();
+        return () => context.revert();
     }, []);
 
     return (
         <div
             ref={containerRef}
             className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#151515] text-white"
-        >   
-            <div
-                ref={textRef}
-                className="text-5xl font-light tracking-tight"
-            >
+        >
+            <div ref={textRef} className="text-5xl font-light tracking-tight">
                 • {greetings[0]}
             </div>
         </div>
