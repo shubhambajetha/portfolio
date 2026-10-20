@@ -11,8 +11,59 @@ model ContactMessage {
   id        String   @id @default(uuid())
   name      String
   email     String
-  message   String
+  message   String   @db.Text
   createdAt DateTime @default(now())
 
   @@map("contact_messages")
+}
+
+model ProjectListing {
+  id             String          @id @default(uuid())
+  title          String
+  slug           String          @unique
+  description    String          @db.Text
+  thumbnail      String?
+  images         String[]        @default([])
+  liveUrl        String?
+  githubUrl      String?
+  category       String?
+  technologies   String[]        @default([])
+  featured       Boolean         @default(false)
+  status         ProjectStatus   @default(COMPLETED)
+  sortOrder      Int             @default(0)
+  published      Boolean         @default(true)
+  projectDetails ProjectDetails?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  @@index([published, sortOrder])
+  @@index([featured])
+  @@index([category])
+  @@map("project_listings")
+}
+
+model ProjectDetails {
+  id               String         @id @default(uuid())
+  projectListingId String         @unique
+  projectListing   ProjectListing @relation(fields: [projectListingId], references: [id], onDelete: Cascade)
+
+  overview         String?  @db.Text
+  problemStatement String?  @db.Text
+  solution         String?  @db.Text
+  features         String[] @default([])
+  challenges       String?  @db.Text
+  architecture     String?  @db.Text
+  role             String?
+  duration         String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("project_details")
+}
+
+enum ProjectStatus {
+  COMPLETED
+  IN_PROGRESS
+  PLANNED
 }
