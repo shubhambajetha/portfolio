@@ -1,5 +1,5 @@
 import { prisma } from "@portfolio/database";
-import { Request, Response } from "express";
+import type { Request, Response } from "express";
 
 export const createdetails = async (req: Request, res: Response) => {
     try {

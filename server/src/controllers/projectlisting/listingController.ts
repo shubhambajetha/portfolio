@@ -1,6 +1,6 @@
 
 import { prisma } from "@portfolio/database";
-import { NextFunction, Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 
 
 class ApiError extends Error {
