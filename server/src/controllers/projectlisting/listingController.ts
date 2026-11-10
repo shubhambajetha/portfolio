@@ -61,6 +61,14 @@ const getErrorCode = (error: unknown): string | undefined => {
     return undefined;
 };
 
+const getUploadedListingImages = (req: Request) => {
+    const files = req.files as { [fieldname: string]: Express.Multer.File[] } | undefined;
+    return {
+        thumbnail: files?.thumbnailFile?.[0],
+        gallery: files?.galleryFiles ?? [],
+    };
+};
+
 const handleError = (
     error: unknown,
     res: Response,
@@ -124,10 +132,15 @@ export const createlisting = async (
             throw new ApiError("Title and slug are required", 400);
         }
 
-        const uploadedFile = (req as Request & { file?: { filename: string } }).file;
+        const uploadedFiles = getUploadedListingImages(req);
+        const uploadedFile = uploadedFiles.thumbnail;
         const thumbnail = uploadedFile
             ? `/uploads/listing/${uploadedFile.filename}`
             : thumbnailInput || null;
+        const imagePaths = [
+            ...(images === undefined ? [] : parseStringArray(images, "images")),
+            ...uploadedFiles.gallery.map((file) => `/uploads/listing/${file.filename}`),
+        ];
 
         const listing = await prisma.projectListing.create({
             data: {
@@ -135,9 +148,7 @@ export const createlisting = async (
                 slug: slug.trim(),
                 description,
                 thumbnail,
-                images: images === undefined
-                    ? []
-                    : parseStringArray(images, "images"),
+                images: imagePaths,
                 liveUrl: liveUrl || null,
                 githubUrl: githubUrl || null,
                 category,
@@ -274,19 +285,24 @@ export const upadtelisting = async (
             throw new ApiError("Slug must be a non-empty string", 400);
         }
 
-        const uploadedFile = (req as Request & { file?: { filename: string } }).file;
+        const uploadedFiles = getUploadedListingImages(req);
+        const uploadedFile = uploadedFiles.thumbnail;
         const thumbnail = uploadedFile
             ? `/uploads/listing/${uploadedFile.filename}`
             : thumbnailInput;
+        const imagePaths = images === undefined && uploadedFiles.gallery.length === 0
+            ? undefined
+            : [
+                ...(images === undefined ? [] : parseStringArray(images, "images")),
+                ...uploadedFiles.gallery.map((file) => `/uploads/listing/${file.filename}`),
+            ];
 
         const data = {
             ...(title !== undefined && { title: title.trim() }),
             ...(slug !== undefined && { slug: slug.trim() }),
             ...(description !== undefined && { description }),
             ...(thumbnail !== undefined && { thumbnail }),
-            ...(images !== undefined && {
-                images: parseStringArray(images, "images"),
-            }),
+            ...(imagePaths !== undefined && { images: imagePaths }),
             ...(liveUrl !== undefined && { liveUrl: liveUrl || null }),
             ...(githubUrl !== undefined && { githubUrl: githubUrl || null }),
             ...(category !== undefined && { category }),

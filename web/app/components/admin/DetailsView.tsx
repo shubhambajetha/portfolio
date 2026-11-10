@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import type { FormEvent } from "react";
 import { createdetails, deletedetails, getalldetails, updatedetails } from "../../services/productdetails";
 import type { ProjectDetails, ProjectDetailsPayload } from "../../services/productdetails";
+import { getalllistings } from "../../services/productapi";
+import type { listing } from "../../types/listingtype";
 
 const emptyForm: ProjectDetailsPayload = {
   overview: "", problemStatement: "", solution: "", features: [],
@@ -12,6 +14,7 @@ const emptyForm: ProjectDetailsPayload = {
 
 export default function DetailsView() {
   const [items, setItems] = useState<ProjectDetails[]>([]);
+  const [listings, setListings] = useState<listing[]>([]);
   const [listingId, setListingId] = useState("");
   const [form, setForm] = useState<ProjectDetailsPayload>(emptyForm);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -24,10 +27,11 @@ export default function DetailsView() {
 
   useEffect(() => {
     let active = true;
-    getalldetails()
-      .then((result) => {
+    Promise.all([getalldetails(), getalllistings()])
+      .then(([detailsResult, listingsResult]) => {
         if (active) {
-          setItems(result.data ?? []);
+          setItems(detailsResult.data ?? []);
+          setListings(listingsResult.data ?? []);
           setError("");
         }
       })
@@ -66,7 +70,10 @@ export default function DetailsView() {
     <section className="space-y-6">
       <h2 className="text-2xl font-semibold">Project details</h2>
       <form onSubmit={submit} className="grid gap-3 rounded-xl border border-white/15 p-4 sm:grid-cols-2">
-        <input required disabled={!!editingId} placeholder="Project listing ID" value={listingId} onChange={(e) => setListingId(e.target.value)} className="rounded bg-white/10 p-3 sm:col-span-2" />
+        <select required disabled={!!editingId} value={listingId} onChange={(e) => setListingId(e.target.value)} className="rounded bg-neutral-900 p-3 sm:col-span-2">
+          <option value="">Select a project listing</option>
+          {listings.filter((listing) => editingId === listingId || !items.some((item) => item.projectListingId === listing.id)).map((listing) => <option key={listing.id} value={listing.id}>{listing.title} · /{listing.slug}</option>)}
+        </select>
         {(["overview", "problemStatement", "solution", "challenges", "architecture", "role", "duration"] as const).map((field) => <textarea key={field} placeholder={field} value={form[field] ?? ""} onChange={(e) => setForm({ ...form, [field]: e.target.value })} className="min-h-20 rounded bg-white/10 p-3" />)}
         <textarea placeholder="Features (one per line)" value={(form.features ?? []).join("\n")} onChange={(e) => setForm({ ...form, features: e.target.value.split("\n").map((value) => value.trim()).filter(Boolean) })} className="min-h-20 rounded bg-white/10 p-3 sm:col-span-2" />
         <div className="flex gap-2 sm:col-span-2"><button className="rounded bg-cyan-700 px-4 py-2">{editingId ? "Save changes" : "Create details"}</button>{editingId && <button type="button" onClick={() => { setEditingId(null); setListingId(""); setForm(emptyForm); }} className="rounded border border-white/20 px-4 py-2">Cancel</button>}</div>

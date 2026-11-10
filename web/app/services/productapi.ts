@@ -3,10 +3,26 @@ import type { listing, listingpayload } from "../types/listingtype";
 import { endpoints } from "../endpoint";
 import { apiClient } from "./apiclient";
 
-export async function createlisting(payload: listingpayload): Promise<ApiResponse<listing>> {
+function listingRequestBody(payload: Partial<listingpayload>, thumbnailFile?: File, galleryFiles: File[] = []): listingpayload | FormData {
+  if (!thumbnailFile && galleryFiles.length === 0) return payload as listingpayload;
+
+  const body = new FormData();
+  for (const [key, value] of Object.entries(payload)) {
+    if (value !== undefined && value !== null) {
+      body.append(key, Array.isArray(value) ? JSON.stringify(value) : String(value));
+    }
+  }
+  if (thumbnailFile) body.append("thumbnailFile", thumbnailFile);
+  galleryFiles.forEach((file) => body.append("galleryFiles", file));
+  return body;
+}
+
+export async function createlisting(payload: listingpayload, thumbnailFile?: File, galleryFiles?: File[]): Promise<ApiResponse<listing>> {
+  const body = listingRequestBody(payload, thumbnailFile, galleryFiles);
   const response = await apiClient.post<ApiResponse<listing>>(
     endpoints.listingcategory.createlisting,
-    payload,
+    body,
+    body instanceof FormData ? { headers: { "Content-Type": "multipart/form-data" } } : undefined,
   );
   return response.data;
 }
@@ -28,10 +44,14 @@ export async function getsinglelisting(id: string): Promise<ApiResponse<listing>
 export async function updatelisting(
   id: string,
   payload: Partial<listingpayload>,
+  thumbnailFile?: File,
+  galleryFiles?: File[],
 ): Promise<ApiResponse<listing>> {
+  const body = listingRequestBody(payload, thumbnailFile, galleryFiles);
   const response = await apiClient.patch<ApiResponse<listing>>(
     endpoints.listingcategory.updatelisting(id),
-    payload,
+    body,
+    body instanceof FormData ? { headers: { "Content-Type": "multipart/form-data" } } : undefined,
   );
   return response.data;
 }
