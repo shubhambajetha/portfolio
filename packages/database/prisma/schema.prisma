@@ -23,7 +23,7 @@ model ProjectListing {
   slug           String          @unique
   description    String          @db.Text
   thumbnail      String?
-  images         String[]        @default([])
+  images         String?[]        @default([])
   liveUrl        String?
   githubUrl      String?
   category       String?

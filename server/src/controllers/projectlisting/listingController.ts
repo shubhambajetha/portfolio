@@ -48,24 +48,6 @@ const parseBoolean = (value: unknown, field: string): boolean => {
     throw new ApiError(`${field} must be a boolean`, 400);
 };
 
-const parseSortOrder = (value: unknown): number => {
-    if (
-        value === "" ||
-        value === null ||
-        value === undefined
-    ) {
-        throw new ApiError("sortOrder must be a valid integer", 400);
-    }
-
-    const parsed = Number(value);
-
-    if (!Number.isInteger(parsed)) {
-        throw new ApiError("sortOrder must be a valid integer", 400);
-    }
-
-    return parsed;
-};
-
 const getErrorCode = (error: unknown): string | undefined => {
     if (
         typeof error === "object" &&
@@ -128,8 +110,9 @@ export const createlisting = async (
             technologies,
             featured,
             status,
-            sortOrder,
             published,
+            sortOrder,
+            thumbnail: thumbnailInput,
         } = req.body;
 
         if (
@@ -144,7 +127,7 @@ export const createlisting = async (
         const uploadedFile = (req as Request & { file?: { filename: string } }).file;
         const thumbnail = uploadedFile
             ? `/uploads/listing/${uploadedFile.filename}`
-            : null;
+            : thumbnailInput || null;
 
         const listing = await prisma.projectListing.create({
             data: {
@@ -165,12 +148,10 @@ export const createlisting = async (
                     ? false
                     : parseBoolean(featured, "featured"),
                 status: status || "COMPLETED",
-                sortOrder: sortOrder === undefined
-                    ? 0
-                    : parseSortOrder(sortOrder),
                 published: published === undefined
                     ? true
                     : parseBoolean(published, "published"),
+                sortOrder: sortOrder === undefined ? 0 : Number(sortOrder),
             },
         });
 
@@ -274,8 +255,9 @@ export const upadtelisting = async (
             technologies,
             featured,
             status,
-            sortOrder,
             published,
+            sortOrder,
+            thumbnail: thumbnailInput,
         } = req.body;
 
         if (
@@ -295,7 +277,7 @@ export const upadtelisting = async (
         const uploadedFile = (req as Request & { file?: { filename: string } }).file;
         const thumbnail = uploadedFile
             ? `/uploads/listing/${uploadedFile.filename}`
-            : undefined;
+            : thumbnailInput;
 
         const data = {
             ...(title !== undefined && { title: title.trim() }),
@@ -315,12 +297,10 @@ export const upadtelisting = async (
                 featured: parseBoolean(featured, "featured"),
             }),
             ...(status !== undefined && { status }),
-            ...(sortOrder !== undefined && {
-                sortOrder: parseSortOrder(sortOrder),
-            }),
             ...(published !== undefined && {
                 published: parseBoolean(published, "published"),
             }),
+            ...(sortOrder !== undefined && { sortOrder: Number(sortOrder) }),
         };
 
         if (Object.keys(data).length === 0) {

@@ -10,14 +10,14 @@ import {
     SiMedium,
 } from "react-icons/si";
 import { FaLinkedin } from "react-icons/fa";
-import { MediumSwiper } from "./MediumSwiper";
+import Link from "next/link";
 
 const links = [
-    { name: "GitHub", Icon: SiGithub, url: "https://github.com/your-username" },
-    { name: "LinkedIn", Icon: FaLinkedin, url: "https://linkedin.com/in/your-username" },
+    { name: "GitHub", Icon: SiGithub, url: "https://github.com/shubhambajetha" },
+    { name: "LinkedIn", Icon: FaLinkedin, url: "https://linkedin.com/in/shubhambajetha" },
     { name: "Medium", Icon: SiMedium, url: "https://medium.com/@your-username" },
-    { name: "LeetCode", Icon: SiLeetcode, url: "https://leetcode.com/u/your-username/" },
-    { name: "Instagram", Icon: SiInstagram, url: "https://instagram.com/your-username" },
+    { name: "LeetCode", Icon: SiLeetcode, url: "https://leetcode.com/u/Trifert/" },
+    { name: "Instagram", Icon: SiInstagram, url: "https://www.instagram.com/shubham__bajetha/" },
 ];
 
 export function FirstSection() {
@@ -27,7 +27,7 @@ export function FirstSection() {
     }, []);
 
     return (
-        <section className="group/section relative isolate mx-auto flex max-w-7xl flex-col overflow-hidden bg-black px-4 py-6 text-white">
+        <section id="about" className="group/section relative isolate mx-auto flex max-w-7xl flex-col overflow-hidden bg-black px-4 py-6 text-white">
             <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 scale-75 bg-[radial-gradient(ellipse_at_50%_45%,rgba(37,99,235,0.2),rgba(34,211,238,0.1)_38%,transparent_72%)] opacity-0 blur-3xl transition-all duration-700 group-hover/section:scale-100 group-hover/section:opacity-100" />
             <div
                 aria-hidden="true"
@@ -37,8 +37,8 @@ export function FirstSection() {
                 <h1 className="relative z-10 order-1 whitespace-nowrap bg-gradient-to-r from-[#60a5fa] via-[#22d3ee] to-[#bfdbfe] bg-clip-text font-rajdhani text-[clamp(2rem,9vw,3.25rem)] font-bold leading-[0.9] tracking-[0.01em] text-transparent md:order-none md:col-span-1 md:text-[clamp(3rem,6vw,7rem)]">
                     FULL-STACK
                 </h1>
-                <a
-                    href="#projects"
+                <Link
+                    href="/projects"
                     className="group relative z-10 order-3 mt-5 flex w-fit items-center gap-3 justify-self-start transition-transform duration-300 ease-out hover:-translate-y-1 md:order-none md:col-span-1 md:mt-2 md:justify-self-end"
                 >
                     <span className="rounded-full bg-white px-10 py-3 font-rajdhani font-semibold text-black transition-all duration-300 group-hover:scale-[1.03] group-hover:bg-gray-300">
@@ -47,7 +47,7 @@ export function FirstSection() {
                     <span className="grid size-12 place-items-center rounded-full bg-white text-black transition-transform duration-300 group-hover:translate-x-1">
                         <ArrowRight size={22} strokeWidth={1.8} />
                     </span>
-                </a>
+                </Link>
             </div>
 
             <div className="contents md:relative md:z-10 md:mt-4 md:grid md:grid-cols-[0.9fr_1.1fr] md:items-center md:gap-x-6 md:gap-y-5">
@@ -79,9 +79,6 @@ export function FirstSection() {
                 </nav>
             </div>
 
-            <div className="relative z-10 order-6 md:order-none">
-                <MediumSwiper />
-            </div>
         </section>
     );
 }

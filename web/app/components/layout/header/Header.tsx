@@ -1,10 +1,10 @@
 import Link from "next/link";
 
 const navigation = [
-    { label: "About", href: "#about" },
-    { label: "Projects", href: "#projects" },
-    { label: "Articles", href: "#articles" },
-    { label: "Contact", href: "#contact" },
+    { label: "About", href: "/about" },
+    { label: "Projects", href: "/projects" },
+    { label: "Articles", href: "/articles" },
+    { label: "Contact", href: "/contact" },
 ];
 
 export default function Header() {
@@ -24,22 +24,22 @@ export default function Header() {
                 className="flex min-w-0 items-center justify-between gap-0.5 rounded-full border border-white/[0.16] bg-gradient-to-b from-white/[0.07] to-white/[0.025] p-1 text-[10px] text-[#b3b1ae] shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_4px_18px_rgba(34,211,238,0.04)] backdrop-blur-md sm:gap-1 sm:p-1.5 sm:text-xs md:justify-center md:gap-2 md:px-2"
             >
                 {navigation.map(({ label, href }) => (
-                    <a
+                    <Link
                         key={label}
                         href={href}
                         className="rounded-full px-2 py-2 text-center transition-colors duration-200 hover:bg-white/[0.09] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#22d3ee] sm:px-3 md:px-4 md:py-2.5"
                     >
                         {label}
-                    </a>
+                    </Link>
                 ))}
             </nav>
 
-            <a
+            <Link
                 className="hidden justify-self-end rounded-full border border-white/[0.14] px-4 py-2 font-[var(--font-share-tech-mono)] text-[11px] uppercase tracking-[0.08em] text-[#aaa8a5] transition-colors duration-200 hover:border-[#22d3ee]/50 hover:text-[#22d3ee] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#22d3ee] lg:inline-flex"
-                href="#contact"
+                href="/contact"
             >
                 Available for work <span aria-hidden="true" className="ml-2">↗</span>
-            </a>
+            </Link>
         </header>
     );
 }

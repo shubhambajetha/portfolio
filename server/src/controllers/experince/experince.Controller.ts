@@ -1,5 +1,5 @@
 import { prisma } from "@portfolio/database";
-import type { NextFunction, Request, Response } from "express";
+import type { Request, Response } from "express";
 
 class ApiError extends Error {
     statusCode: number;
@@ -15,8 +15,8 @@ export const createxperience = async (req: Request, res: Response) => {
     try {
         const { title, subtitle, timeDate, description } = req.body
 
-        if (title !== undefined || !title.trim()) {
-            throw new ApiError("Title and slug are required", 400);
+        if (typeof title !== "string" || !title.trim()) {
+            throw new ApiError("Title is required", 400);
         }
 
         const createdata = await prisma.careerExperience.create({
@@ -29,21 +29,21 @@ export const createxperience = async (req: Request, res: Response) => {
         });
 
         return res.status(201).json({
-            status:true,
-            message:"experince created sucessfully",
-            data:createdata,
+            status: true,
+            message: "experince created sucessfully",
+            data: createdata,
         });
     } catch (error) {
         return res.status(400).json({
-            status:false,
-            message:"something error ocuuried",
+            status: false,
+            message: "something error ocuuried",
         });
     }
 }
 
 
-export const getallexperince = async(req:Request, res:Response) =>{
-    try{
+export const getallexperince = async (req: Request, res: Response) => {
+    try {
         const getdata = await prisma.careerExperience.findMany({
             orderBy: [
                 { sortOrder: "asc" },
@@ -52,24 +52,98 @@ export const getallexperince = async(req:Request, res:Response) =>{
         })
 
         return res.status(200).json({
-            status:true,
-            message:"fetched all experince succesfully",
-            data:getdata,
+            status: true,
+            message: "fetched all experince succesfully",
+            data: getdata,
         });
-    }catch(error){
+    } catch (error) {
         return res.status(400).json({
-            status:false,
-            message:"something errror occured"
+            status: false,
+            message: "something errror occured"
         });
     }
 }
 
 
-export const updateproject  = async(req:Request, res:Response)=>{
-    try{
-        const id  = String(req.params.id);
-        const newbody = 
-    }catch(error){
+export const updateproject = async (req: Request, res: Response) => {
+    try {
+        const id = String(req.params.id)
 
+        const exisitingid = await prisma.careerExperience.findUnique({
+            where: { id }
+        });
+
+        if (!exisitingid) {
+            return res.status(400).json({
+                status: false,
+                message: "there is no existing product found",
+            });
+        }
+
+        const { title, subtitle, timeDate, description } = req.body
+
+        if (title !== undefined && (typeof title !== "string" || !title.trim())) {
+            return res.status(400).json({
+                status: false,
+                message: "kindly provide and trim the value before update",
+            });
+        }
+        const data = {
+            ...(title !== undefined && { title: title.trim() }),
+            ...(subtitle !== undefined && { subtitle }),
+            ...(timeDate !== undefined && { timeDate }),
+            ...(description !== undefined && { description }),
+        }
+
+        const updatExperince = await prisma.careerExperience.update({
+            where: { id },
+            data
+        });
+
+        return res.status(200).json({
+            status: true,
+            data: updatExperince,
+            message: "carrer experince update sucessfully",
+        });
+    } catch (errror) {
+        return res.status(400).json({
+            status: false,
+            mesage: "something error ocuured kindly fixed",
+        });
+    }
+}
+
+export const deleteproject = async(req:Request, res:Response)=>{
+    try{
+        const id = String(req.params.id);
+
+        const existingid = await prisma.careerExperience.findUnique({
+            where:{id}
+        })
+
+        if(!existingid){
+            return res.status(404).json({
+                status:false,
+                mesage:"there is no existing id found kindly check",
+            });
+        }
+
+        const deleteexperince = await prisma.careerExperience.delete({
+            where:{id},
+        });
+
+        return res.status(200).json({
+            status:true,
+            message:"The project deleted succesfully",
+            data:deleteexperince
+        })
+
+
+    }catch(error){
+        console.error("Delete experience error:", error);
+        return res.status(500).json({
+            status: false,
+            message: "Could not delete experience",
+        });
     }
 }

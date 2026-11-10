@@ -13,6 +13,12 @@ import {
     getdeatils,
     updateproject,
 } from "./controllers/projectdetails/detailscontroller.ts";
+import {
+    createxperience,
+    deleteproject as deleteexperience,
+    getallexperince,
+    updateproject as updateexperience,
+} from "./controllers/experince/experince.Controller.ts";
 
 const app = express();
 
@@ -31,4 +37,9 @@ app.patch("/api/listings/:projectListingId/details", updateproject);
 app.delete("/api/listings/:projectListingId/details", deleteproject);
 app.get("/api/project-details", getalldetails);
 
-export default app
+app.post("/api/experience", createxperience);
+app.get("/api/experience", getallexperince);
+app.patch("/api/experience/:id", updateexperience);
+app.delete("/api/experience/:id", deleteexperience);
+
+export default app;

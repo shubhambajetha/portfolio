@@ -4,6 +4,7 @@ import { FourthSection } from "./components/homepage/FourthSection";
 import FifthSection from "./components/homepage/FifthSection";
 import SixthSection from "./components/homepage/SixthSection";
 import SevenSection from "./components/homepage/SevenSection";
+import { MediumSwiper } from "./components/homepage/MediumSwiper";
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
     <FifthSection/>
     <FourthSection/>
     <SixthSection/>
+    <MediumSwiper />
     <SevenSection/>
    </div>
   );

@@ -4,13 +4,15 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, A11y, Keyboard } from "swiper/modules";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 
-import Image from "next/image";
+import Link from "next/link";
 import "swiper/css";
 
 
 const projects = [
     {
         id: 1,
+        slug: "ai-workspace",
+        coverStyle: "from-blue-950 via-blue-700 to-cyan-400",
         title: "AI Workspace",
         category: "AI · WEB APP",
         description: "A workspace for turning AI conversations into useful work.",
@@ -20,6 +22,8 @@ const projects = [
     },
     {
         id: 2,
+        slug: "everyday-finance",
+        coverStyle: "from-emerald-950 via-teal-700 to-lime-300",
         title: "Everyday Finance",
         category: "MOBILE · PRODUCT",
         description: "A mobile experience for tracking spending and financial goals.",
@@ -29,6 +33,8 @@ const projects = [
     },
     {
         id: 3,
+        slug: "studio-portfolio",
+        coverStyle: "from-fuchsia-950 via-violet-800 to-pink-400",
         title: "Studio Portfolio",
         category: "WEB · CREATIVE",
         description: "A modern portfolio with smooth animations and clean design.",
@@ -97,14 +103,8 @@ export default function FifthSection() {
                 {projects.map((project) => (
                     <SwiperSlide key={project.id}>
                         <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-neutral-900">
-                            <div className="relative aspect-[16/10]">
-                                <Image
-                                    src={project.image}
-                                    alt={project.title}
-                                    fill
-                                    sizes="(max-width: 639px) 100vw, (max-width: 1023px) 65vw, 50vw"
-                                    className="object-cover transition duration-500 hover:scale-105"
-                                />
+                            <div aria-hidden="true" className={`aspect-[16/10] bg-gradient-to-br ${project.coverStyle}`}>
+                                <div className="flex h-full items-end p-5"><span className="font-[var(--font-share-tech-mono)] text-xs tracking-[0.18em] text-white/80">{project.title.toUpperCase()}</span></div>
                             </div>
 
                             <div className="flex flex-1 flex-col p-4">
@@ -130,6 +130,10 @@ export default function FifthSection() {
                                         </span>
                                     ))}
                                 </div>
+
+                                <Link href={`/${project.slug}`} className="mt-4 inline-flex w-fit items-center gap-1 text-sm font-medium text-cyan-300 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-400">
+                                    View details <ArrowUpRight size={16} aria-hidden="true" />
+                                </Link>
 
                             </div>
                         </article>
