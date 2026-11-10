@@ -4,7 +4,6 @@ import { config, getApiBaseUrl } from "../lib/config";
 const api: AxiosInstance = axios.create({
   baseURL: getApiBaseUrl(),
   timeout: config.timeoutMs || 30000,
-  withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
   },

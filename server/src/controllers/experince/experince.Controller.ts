@@ -13,7 +13,7 @@ class ApiError extends Error {
 
 export const createxperience = async (req: Request, res: Response) => {
     try {
-        const { title, subtitle, timeDate, description } = req.body
+        const { title, subtitle, timeDate, endtimedate, description } = req.body
 
         if (typeof title !== "string" || !title.trim()) {
             throw new ApiError("Title is required", 400);
@@ -24,6 +24,7 @@ export const createxperience = async (req: Request, res: Response) => {
                 title: title.trim(),
                 subtitle,
                 timeDate,
+                endtimedate,
                 description
             },
         });
@@ -45,10 +46,7 @@ export const createxperience = async (req: Request, res: Response) => {
 export const getallexperince = async (req: Request, res: Response) => {
     try {
         const getdata = await prisma.careerExperience.findMany({
-            orderBy: [
-                { sortOrder: "asc" },
-                { createdAt: "desc" },
-            ],
+            orderBy: { createdAt: "desc" },
         })
 
         return res.status(200).json({
@@ -80,7 +78,7 @@ export const updateproject = async (req: Request, res: Response) => {
             });
         }
 
-        const { title, subtitle, timeDate, description } = req.body
+        const { title, subtitle, timeDate, endtimedate, description } = req.body
 
         if (title !== undefined && (typeof title !== "string" || !title.trim())) {
             return res.status(400).json({
@@ -92,6 +90,7 @@ export const updateproject = async (req: Request, res: Response) => {
             ...(title !== undefined && { title: title.trim() }),
             ...(subtitle !== undefined && { subtitle }),
             ...(timeDate !== undefined && { timeDate }),
+            ...(endtimedate !== undefined && { endtimedate }),
             ...(description !== undefined && { description }),
         }
 
@@ -113,33 +112,33 @@ export const updateproject = async (req: Request, res: Response) => {
     }
 }
 
-export const deleteproject = async(req:Request, res:Response)=>{
-    try{
+export const deleteproject = async (req: Request, res: Response) => {
+    try {
         const id = String(req.params.id);
 
         const existingid = await prisma.careerExperience.findUnique({
-            where:{id}
+            where: { id }
         })
 
-        if(!existingid){
+        if (!existingid) {
             return res.status(404).json({
-                status:false,
-                mesage:"there is no existing id found kindly check",
+                status: false,
+                mesage: "there is no existing id found kindly check",
             });
         }
 
         const deleteexperince = await prisma.careerExperience.delete({
-            where:{id},
+            where: { id },
         });
 
         return res.status(200).json({
-            status:true,
-            message:"The project deleted succesfully",
-            data:deleteexperince
+            status: true,
+            message: "The project deleted succesfully",
+            data: deleteexperince
         })
 
 
-    }catch(error){
+    } catch (error) {
         console.error("Delete experience error:", error);
         return res.status(500).json({
             status: false,

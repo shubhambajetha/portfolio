@@ -14,6 +14,8 @@ const emptyForm: listingpayload = {
 export default function ListingView() {
   const [items, setItems] = useState<listing[]>([]);
   const [form, setForm] = useState<listingpayload>(emptyForm);
+  const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
+  const [galleryFiles, setGalleryFiles] = useState<File[]>([]);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [error, setError] = useState("");
 
@@ -45,9 +47,17 @@ export default function ListingView() {
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
-      if (editingId) await updatelisting(editingId, form);
-      else await createlisting(form);
+      const payload = {
+        ...form,
+        githubUrl: form.githubUrl?.trim() || null,
+        images: form.images?.map((value) => value.trim()).filter(Boolean),
+        technologies: form.technologies?.map((value) => value.trim()).filter(Boolean),
+      };
+      if (editingId) await updatelisting(editingId, payload, thumbnailFile ?? undefined, galleryFiles);
+      else await createlisting(payload, thumbnailFile ?? undefined, galleryFiles);
       setForm(emptyForm);
+      setThumbnailFile(null);
+      setGalleryFiles([]);
       setEditingId(null);
       await refresh();
     } catch {
@@ -57,6 +67,8 @@ export default function ListingView() {
 
   function edit(item: listing) {
     setEditingId(item.id);
+    setThumbnailFile(null);
+    setGalleryFiles([]);
     setForm({
       title: item.title,
       slug: item.slug,
@@ -88,18 +100,20 @@ export default function ListingView() {
         <input required placeholder="Slug" value={form.slug} onChange={(e) => setForm({ ...form, slug: e.target.value })} className="rounded bg-white/10 p-3" />
         <textarea required placeholder="Description" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className="rounded bg-white/10 p-3 sm:col-span-2" />
         <input placeholder="Thumbnail URL or path" value={form.thumbnail ?? ""} onChange={(e) => setForm({ ...form, thumbnail: e.target.value || null })} className="rounded bg-white/10 p-3" />
+        <label className="flex flex-col gap-1 text-sm text-white/60">Choose a local image (optional)<input type="file" accept="image/png,image/jpeg,image/webp,image/gif" onChange={(e) => setThumbnailFile(e.target.files?.[0] ?? null)} className="rounded bg-white/10 p-3 text-base text-white file:mr-3 file:rounded file:border-0 file:bg-cyan-700 file:px-3 file:py-2" /><span className="text-xs">PNG, JPG, WEBP, or GIF · up to 10 MB{thumbnailFile ? ` · Selected: ${thumbnailFile.name}` : ""}</span></label>
         <input placeholder="Category" value={form.category ?? ""} onChange={(e) => setForm({ ...form, category: e.target.value })} className="rounded bg-white/10 p-3" />
         <input placeholder="Live URL" value={form.liveUrl ?? ""} onChange={(e) => setForm({ ...form, liveUrl: e.target.value })} className="rounded bg-white/10 p-3" />
-        <input placeholder="GitHub URL" value={form.githubUrl ?? ""} onChange={(e) => setForm({ ...form, githubUrl: e.target.value })} className="rounded bg-white/10 p-3" />
-        <textarea placeholder="Image paths (one per line)" value={(form.images ?? []).join("\n")} onChange={(e) => setForm({ ...form, images: e.target.value.split("\n").map((value) => value.trim()).filter(Boolean) })} className="rounded bg-white/10 p-3" />
-        <textarea placeholder="Technologies (one per line)" value={(form.technologies ?? []).join("\n")} onChange={(e) => setForm({ ...form, technologies: e.target.value.split("\n").map((value) => value.trim()).filter(Boolean) })} className="rounded bg-white/10 p-3" />
+        <input placeholder="GitHub URL (optional)" value={form.githubUrl ?? ""} onChange={(e) => setForm({ ...form, githubUrl: e.target.value })} className="rounded bg-white/10 p-3" />
+        <textarea placeholder="Image paths (one per line)" value={(form.images ?? []).join("\n")} onChange={(e) => setForm({ ...form, images: e.target.value.split("\n") })} className="rounded bg-white/10 p-3" />
+        <label className="flex flex-col gap-1 text-sm text-white/60">Choose gallery images<input type="file" multiple accept="image/png,image/jpeg,image/webp,image/gif" onChange={(e) => setGalleryFiles(Array.from(e.target.files ?? []))} className="rounded bg-white/10 p-3 text-base text-white file:mr-3 file:rounded file:border-0 file:bg-cyan-700 file:px-3 file:py-2" /><span className="text-xs">Select up to 20 PNG, JPG, WEBP, or GIF images, 10 MB each{galleryFiles.length ? ` · ${galleryFiles.length} selected` : ""}</span></label>
+        <textarea placeholder="Technologies (one per line)" value={(form.technologies ?? []).join("\n")} onChange={(e) => setForm({ ...form, technologies: e.target.value.split("\n") })} className="rounded bg-white/10 p-3" />
         <select value={form.status ?? "COMPLETED"} onChange={(e) => setForm({ ...form, status: e.target.value })} className="rounded bg-neutral-900 p-3"><option value="COMPLETED">Completed</option><option value="IN_PROGRESS">In progress</option><option value="PLANNED">Planned</option></select>
         <input type="number" placeholder="Sort order" value={form.sortOrder ?? 0} onChange={(e) => setForm({ ...form, sortOrder: Number(e.target.value) })} className="rounded bg-white/10 p-3" />
         <label className="flex items-center gap-2"><input type="checkbox" checked={form.featured ?? false} onChange={(e) => setForm({ ...form, featured: e.target.checked })} />Featured</label>
         <label className="flex items-center gap-2"><input type="checkbox" checked={form.published ?? true} onChange={(e) => setForm({ ...form, published: e.target.checked })} />Published</label>
         <div className="flex gap-2 sm:col-span-2">
           <button className="rounded bg-cyan-700 px-4 py-2">{editingId ? "Save changes" : "Create listing"}</button>
-          {editingId && <button type="button" onClick={() => { setEditingId(null); setForm(emptyForm); }} className="rounded border border-white/20 px-4 py-2">Cancel</button>}
+          {editingId && <button type="button" onClick={() => { setEditingId(null); setForm(emptyForm); setThumbnailFile(null); setGalleryFiles([]); }} className="rounded border border-white/20 px-4 py-2">Cancel</button>}
         </div>
       </form>
       {error && <p role="alert" className="text-red-400">{error}</p>}

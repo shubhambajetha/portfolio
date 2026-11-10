@@ -22,7 +22,6 @@ import {
     SiCss,
 } from "react-icons/si";
 import { FaJava } from "react-icons/fa6";
-import type { CSSProperties } from "react";
 import type { IconType } from "react-icons";
 
 const skills: { name: string; Icon: IconType; color: string }[] = [
