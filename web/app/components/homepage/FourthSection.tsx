@@ -4,45 +4,72 @@ import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
+    SiBootstrap,
+    SiCss,
     SiDocker,
-    SiDart,
+    SiExpress,
     SiFirebase,
-    SiFigma,
-    SiFlutter,
-    SiGitlab,
+    SiGit,
+    SiGsap,
     SiGithub,
     SiHtml5,
     SiJavascript,
-    SiKotlin,
-    SiOllama,
+    SiLaravel,
+    SiMongodb,
+    SiMysql,
+    SiNextdotjs,
+    SiNodedotjs,
+    SiPostgresql,
+    SiPostman,
+    SiPrisma,
     SiPhp,
     SiPython,
-    SiSwift,
-    SiMysql,
-    SiCss,
+    SiReact,
+    SiRedux,
+    SiTailwindcss,
+    SiTypescript,
 } from "react-icons/si";
-import { FaJava } from "react-icons/fa6";
+import { FaAws } from "react-icons/fa6";
 import type { IconType } from "react-icons";
 
-const skills: { name: string; Icon: IconType; color: string }[] = [
-    { name: "Flutter", Icon: SiFlutter, color: "#42a5f5" },
-    { name: "Dart", Icon: SiDart, color: "#42a5f5" },
-    { name: "Kotlin", Icon: SiKotlin, color: "#a970ff" },
-    { name: "Java", Icon: FaJava, color: "#f89820" },
-    { name: "Swift", Icon: SiSwift, color: "#f05138" },
-    { name: "SwiftUI", Icon: SiSwift, color: "#0a84ff" },
-    { name: "HTML", Icon: SiHtml5, color: "#e96328" },
-    { name: "CSS", Icon: SiCss, color: "#42a5f5" },
-    { name: "JavaScript", Icon: SiJavascript, color: "#f7df1e" },
-    { name: "Python", Icon: SiPython, color: "#4b9bd5" },
-    { name: "SQL", Icon: SiMysql, color: "#4b9bd5" },
-    { name: "PHP", Icon: SiPhp, color: "#8993be" },
-    { name: "GitHub", Icon: SiGithub, color: "#d1d5db" },
-    { name: "GitLab", Icon: SiGitlab, color: "#fc6d26" },
-    { name: "Docker", Icon: SiDocker, color: "#2496ed" },
-    { name: "Ollama", Icon: SiOllama, color: "#d1d5db" },
-    { name: "Figma", Icon: SiFigma, color: "#f24e1e" },
-    { name: "Firebase", Icon: SiFirebase, color: "#ffca28" },
+const skillGroups: { title: string; skills: { name: string; Icon: IconType; color: string }[] }[] = [
+    { title: "Languages", skills: [
+        { name: "JavaScript", Icon: SiJavascript, color: "#f7df1e" },
+        { name: "TypeScript", Icon: SiTypescript, color: "#3178c6" },
+        { name: "Python", Icon: SiPython, color: "#4b9bd5" },
+        { name: "PHP", Icon: SiPhp, color: "#8993be" },
+        { name: "SQL", Icon: SiMysql, color: "#4b9bd5" },
+    ] },
+    { title: "Frontend", skills: [
+        { name: "React", Icon: SiReact, color: "#61dafb" },
+        { name: "Next.js", Icon: SiNextdotjs, color: "#f5f5f5" },
+        { name: "React Native", Icon: SiReact, color: "#61dafb" },
+        { name: "HTML5", Icon: SiHtml5, color: "#e96328" },
+        { name: "CSS3", Icon: SiCss, color: "#42a5f5" },
+        { name: "Tailwind CSS", Icon: SiTailwindcss, color: "#38bdf8" },
+        { name: "Redux", Icon: SiRedux, color: "#a970ff" },
+        { name: "GSAP", Icon: SiGsap, color: "#88ce02" },
+        { name: "Bootstrap", Icon: SiBootstrap, color: "#7952b3" },
+    ] },
+    { title: "Backend & APIs", skills: [
+        { name: "Node.js", Icon: SiNodedotjs, color: "#68a063" },
+        { name: "Express.js", Icon: SiExpress, color: "#d1d5db" },
+        { name: "Laravel", Icon: SiLaravel, color: "#ff2d20" },
+        { name: "Prisma ORM", Icon: SiPrisma, color: "#8c9eff" },
+    ] },
+    { title: "Databases", skills: [
+        { name: "MySQL", Icon: SiMysql, color: "#4b9bd5" },
+        { name: "PostgreSQL", Icon: SiPostgresql, color: "#699eca" },
+        { name: "MongoDB", Icon: SiMongodb, color: "#47a248" },
+        { name: "Firebase", Icon: SiFirebase, color: "#ffca28" },
+    ] },
+    { title: "Tools & Cloud", skills: [
+        { name: "Git", Icon: SiGit, color: "#f05032" },
+        { name: "GitHub", Icon: SiGithub, color: "#d1d5db" },
+        { name: "Postman", Icon: SiPostman, color: "#ff6c37" },
+        { name: "Docker", Icon: SiDocker, color: "#2496ed" },
+        { name: "AWS", Icon: FaAws, color: "#ff9900" },
+    ] },
 ];
 
 export function FourthSection() {
@@ -91,16 +118,21 @@ export function FourthSection() {
                     <p className="mb-2 font-[var(--font-share-tech-mono)] text-xs uppercase tracking-[0.18em] text-[#22d3ee]">What I work with</p>
                     <h2 id="skills-title" className="bg-gradient-to-r from-[#60a5fa] to-[#22d3ee] bg-clip-text font-[var(--font-rajdhani)] text-5xl font-semibold leading-none tracking-tight text-transparent sm:text-7xl">Skills.</h2>
                 </div>
-                <p className="mb-1 hidden max-w-xs text-sm leading-6 text-gray-400 sm:block">Tools and technologies I use to bring ideas to life.</p>
+                <p className="mb-1 hidden max-w-xs text-sm leading-6 text-gray-400 sm:block">Tools and technologies I use to build across the stack.</p>
             </header>
 
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-6">
-                {skills.map(({ name, Icon, color }) => (
-                    <article key={name} className="group relative flex min-h-28 flex-col items-center justify-center gap-3 overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.055] to-white/[0.015] px-3 py-5 transition-all duration-300 ease-out before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_50%_40%,rgba(34,211,238,0.2),transparent_72%)] before:opacity-0 before:transition-opacity before:duration-300 before:content-[''] hover:-translate-y-1.5 hover:border-cyan-300/40 hover:shadow-[0_12px_35px_rgba(37,99,235,0.2),inset_0_0_24px_rgba(34,211,238,0.08)] hover:before:opacity-100 active:-translate-y-1 motion-reduce:transition-none sm:min-h-32 sm:rounded-[20px]">
-                        <Icon aria-hidden="true" style={{ color }} className="relative z-10 size-8 transition duration-300 group-hover:scale-110 group-hover:drop-shadow-[0_0_10px_rgba(34,211,238,0.55)] motion-reduce:transition-none" />
-                        <h3 className="relative z-10 m-0 text-sm font-medium text-gray-300 transition-colors duration-300 group-hover:text-white">{name}</h3>
-                    </article>
-                ))}
+            <div className="space-y-8 sm:space-y-10">
+                {skillGroups.map(({ title, skills }) => <div key={title}>
+                    <h3 className="mb-3 font-[var(--font-share-tech-mono)] text-xs uppercase tracking-[0.16em] text-white/45">{title}</h3>
+                    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-6">
+                        {skills.map(({ name, Icon, color }) => (
+                            <article key={name} className="skill-card group relative flex min-h-28 flex-col items-center justify-center gap-3 overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.055] to-white/[0.015] px-3 py-5 transition-all duration-300 ease-out before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_50%_40%,rgba(34,211,238,0.2),transparent_72%)] before:opacity-0 before:transition-opacity before:duration-300 before:content-[''] hover:-translate-y-1.5 hover:border-cyan-300/40 hover:shadow-[0_12px_35px_rgba(37,99,235,0.2),inset_0_0_24px_rgba(34,211,238,0.08)] hover:before:opacity-100 active:-translate-y-1 motion-reduce:transition-none sm:min-h-32 sm:rounded-[20px]">
+                                <Icon aria-hidden="true" style={{ color }} className="relative z-10 size-8 transition duration-300 group-hover:scale-110 group-hover:drop-shadow-[0_0_10px_rgba(34,211,238,0.55)] motion-reduce:transition-none" />
+                                <p className="relative z-10 m-0 text-center text-sm font-medium text-gray-300 transition-colors duration-300 group-hover:text-white">{name}</p>
+                            </article>
+                        ))}
+                    </div>
+                </div>)}
             </div>
         </section>
     );

@@ -8,6 +8,7 @@ import ExperienceView from "../components/admin/ExperienceView";
 const sections = ["Listings", "Project details", "Experience"] as const;
 type Section = (typeof sections)[number];
 
+
 export default function AdminPage() {
   const [active, setActive] = useState<Section>("Listings");
   return (
