@@ -8,6 +8,10 @@ import { MediumSwiper } from "./components/homepage/MediumSwiper";
 import { getalllistings } from "./services/productapi";
 import { getallexperience } from "./services/experince";
 
+// These listings come from the API at request time; they are not available
+// while producing a static build.
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const[projectdata, experincedata] = await Promise.all([
     getalllistings(),
