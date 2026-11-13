@@ -27,7 +27,7 @@ export function FirstSection() {
     }, []);
 
     return (
-        <section id="about" className="group/section relative isolate mx-auto flex max-w-7xl flex-col overflow-hidden bg-black px-4 py-6 text-white">
+        <section id="about" className="group/section relative isolate mx-auto flex scroll-mt-24 max-w-7xl flex-col overflow-hidden bg-black px-4 py-6 text-white">
             <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 scale-75 bg-[radial-gradient(ellipse_at_50%_45%,rgba(37,99,235,0.2),rgba(34,211,238,0.1)_38%,transparent_72%)] opacity-0 blur-3xl transition-all duration-700 group-hover/section:scale-100 group-hover/section:opacity-100" />
             <div
                 aria-hidden="true"

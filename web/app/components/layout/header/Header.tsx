@@ -1,10 +1,10 @@
 import Link from "next/link";
 
 const navigation = [
-    { label: "About", href: "/about" },
-    { label: "Projects", href: "/projects" },
-    { label: "Articles", href: "/articles" },
-    { label: "Contact", href: "/contact" },
+    { label: "About", href: "/#about" },
+    { label: "Projects", href: "/#projects" },
+    { label: "Articles", href: "/#articles" },
+    { label: "Contact", href: "/#contact" },
 ];
 
 export default function Header() {

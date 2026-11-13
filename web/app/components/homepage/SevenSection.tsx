@@ -5,13 +5,13 @@ export default function SevenSection() {
         <section
             id="contact"
             aria-labelledby="contact-title"
-            className="group/section relative isolate mx-auto w-[calc(100%-2.25rem)] max-w-7xl py-12 text-white sm:w-[calc(100%-4rem)] sm:py-20"
+            className="group/section relative isolate mx-auto w-[calc(100%-2.25rem)] max-w-7xl scroll-mt-24 py-12 text-white sm:w-[calc(100%-4rem)] sm:py-20"
         >
             <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 scale-50 rounded-[40%] bg-[radial-gradient(ellipse_at_center,rgba(37,99,235,0.22),rgba(34,211,238,0.12)_38%,transparent_72%)] opacity-0 blur-3xl transition-all duration-700 group-hover/section:scale-100 group-hover/section:opacity-100" />
             <header className="mb-8 sm:mb-10">
                 <p className="mb-2 font-[var(--font-share-tech-mono)] text-xs uppercase tracking-[0.18em] text-[#22d3ee] transition-colors duration-500 group-hover/section:text-[#93c5fd] sm:text-sm">
                     Let&apos;s turn your next idea
-                </p>
+                </p>    
                 <h2 className="bg-gradient-to-r from-[#60a5fa] via-[#22d3ee] to-[#bfdbfe] bg-clip-text font-rajdhani text-3xl font-semibold tracking-tight text-transparent sm:text-5xl">
                     Ready to Connect
                 </h2>
@@ -37,7 +37,7 @@ export default function SevenSection() {
                 </p>
 
                 <a
-                    href="mailto:"
+                    href="mailto:shubhambajetha8@gmail.com"
                     className="group mt-10 inline-flex min-h-[72px] items-center gap-5 rounded-full border border-white/15 px-9 font-[var(--font-share-tech-mono)] text-base font-semibold text-gray-100 transition-all duration-300 hover:border-[#22d3ee]/60 hover:bg-[#2563eb]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#22d3ee] focus-visible:ring-offset-4 focus-visible:ring-offset-[#080708]"
                 >
                     Get in Touch
