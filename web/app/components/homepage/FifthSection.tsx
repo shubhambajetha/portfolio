@@ -4,7 +4,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, A11y, Keyboard } from "swiper/modules";
 import { ArrowLeft, ArrowRight, ArrowUpRight, Code2, Globe2 } from "lucide-react";
 import Link from "next/link";
-import "swiper/css";
 import type { listing } from "@/app/types/listingtype";
 import { resolveApiAssetUrl } from "@/app/lib/config";
 
